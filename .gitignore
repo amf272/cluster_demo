@@ -1,6 +1,7 @@
 submitit_logs
 slurm-*.out
 checkpoints
+logs
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -8,7 +8,7 @@
 #SBATCH --cpus-per-task=1  # Adjust CPU count as needed
 
 # run this with
-# export COMMANDS_FILE=commands.txt; sbatch --array=0-$(($(grep -c "" $COMMANDS_FILE)-1)) run_all_lines.sh
+# export COMMANDS_FILE=runfiles/commands.txt; sbatch --array=0-$(($(grep -c "" $COMMANDS_FILE)-1)) runfiles/run_all_lines.sh
 # Read the command from the file corresponding to this job array index
 CMD=$(sed -n "$(($SLURM_ARRAY_TASK_ID + 1))p" $COMMANDS_FILE)
 

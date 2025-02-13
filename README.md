@@ -40,8 +40,16 @@ export COMMANDS_FILE=commands.txt; sbatch --array=0-$(($(grep -c "" $COMMANDS_FI
 ## Code invariants
 1. imports in this directory should work the same way with or without pip installing
     > don't want to make things in scripts/notebooks look different than elsewhere
+
+    > want to be able to pip install as an afterthought without having to refactor stuff
 2.  imports should work with or without pyproject.toml
     > want to be able to add pyproject.toml as an afterthought without having to refactor stuff
 3. imports in this top-level directory should work the same as anywhere else after pip installing
     > after pip installing, can copy script code anywhere / use it as example code for your package
 4. things are always run / act as if they are run from the top level directory
+5. readily "deployable" as a python package by deleting all experiment files (scripts, notebooks, etc)
+    > don't put package-specific code in side "project" (beepseek), nothing inside beepseek should import/depend on scripts / notebooks / top-level stuff etc
+6. avoid hardcoded paths in "project" files (inside beepseek)
+7. generally should be flexible, the same exact code should work with / without pyproject, with / without pip install, with / without slurm, and be intuitive based on the directory structure
+8. should be quick to onboard someone
+    > should be able to quickly get same exact environment / same exact files as your collaborators, some things like data linking instructions should be in the readme
