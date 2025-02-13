@@ -14,6 +14,9 @@ def train_model(method="diff_opt", n_epochs=1):
     print(f"training model with method={method} and n_epochs={n_epochs}")
     time.sleep(n_epochs)
     print(f"done training model with method={method} and n_epochs={n_epochs}")
+    print("saving model")
+    with open(f"checkpoints/model_{method}_{n_epochs}.txt", "w") as f:
+        f.write(f"method={method} n_epochs={n_epochs}")
     return method, n_epochs
 
 
@@ -68,7 +71,7 @@ def submit():
 if __name__ == "__main__":
     """
     Usage:
-    python -m scripts.train_models main --method=diff_opt --n_epochs=0.1
+    python -m scripts.train_models main --method=diff_opt --n_epochs=1
     python -m scripts.train_models submit
     """
     fire.Fire()
