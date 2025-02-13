@@ -1,3 +1,4 @@
 echo "line 1"
 echo "line 2"
 which python
+python -m scripts.train_models main --method=diff_opt --n_epochs=0.1

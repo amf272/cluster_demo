@@ -4,19 +4,25 @@ import fire
 import submitit
 import tqdm.auto as tqdm
 
+import beepseek.train
+
 CPUS_PER_TASK = 1
 MEM_PER_TASK = 0.1
 
 
-def train_model(method="diff_opt", learning_rate=1):
-    print(f"training model with method={method} and learning_rate={learning_rate}")
-    time.sleep(learning_rate)
-    print(f"done training model with method={method} and learning_rate={learning_rate}")
-    return method, learning_rate
+def train_model(method="diff_opt", n_epochs=1):
+    print(f"training model with method={method} and n_epochs={n_epochs}")
+    time.sleep(n_epochs)
+    print(f"done training model with method={method} and n_epochs={n_epochs}")
+    return method, n_epochs
 
 
-def main(method="diff_opt", learning_rate=1):
-    return train_model(method, learning_rate)
+def main(method="diff_opt", n_epochs=1, use_beepseek=False):
+    # alternatively
+    if use_beepseek:
+        return beepseek.train.complicated_train_model(method=method, n_epochs=n_epochs)
+    else:
+        return train_model(method=method, n_epochs=n_epochs)
 
 
 def submit():
@@ -36,7 +42,7 @@ def submit():
         "diff_opt",
     ]
 
-    learning_rates = [
+    n_epochss = [
         1,
         10,
         15,
@@ -45,13 +51,13 @@ def submit():
     jobs = []
     with executor.batch():
         for method in methods:
-            for learning_rate in learning_rates:
-                print(f"submitting {method} {learning_rate}")
+            for n_epochs in n_epochss:
+                print(f"submitting {method} {n_epochs}")
 
                 job = executor.submit(
                     main,
                     method=method,
-                    learning_rate=learning_rate,
+                    n_epochs=n_epochs,
                 )
                 jobs.append(job)
 
@@ -62,7 +68,7 @@ def submit():
 if __name__ == "__main__":
     """
     Usage:
-    python -m scripts.run_train main --method=diff_opt --learning_rate=0.1
-    python -m scripts.run_train submit
+    python -m scripts.train_models main --method=diff_opt --n_epochs=0.1
+    python -m scripts.train_models submit
     """
     fire.Fire()
